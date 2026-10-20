@@ -20,7 +20,7 @@ pipeline {
 
         stage('Compile') {
             steps {
-                dir('apache-maven-3.10.0') {
+                dir('Maven') {
                     sh 'mvn compile'
                 }
             }
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('apache-maven-3.10.0') {
+                dir('Maven') {
                     sh 'mvn test'
                 }
             }
@@ -36,7 +36,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('apache-maven-3.10.0') {
+                dir('Maven') {
                     sh 'mvn package'
                 }
             }
