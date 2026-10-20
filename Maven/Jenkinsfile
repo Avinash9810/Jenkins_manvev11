@@ -4,6 +4,7 @@ pipeline {
         maven 'maven'
         jdk 'jdk27'
     }
+        stages {
         stage('Compile') {
             steps {
                 dir('Maven') {
