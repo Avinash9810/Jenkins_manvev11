@@ -9,15 +9,6 @@ pipeline {
         maven 'maven'
         jdk 'jdk27'
     }
-
-    stages {
-        stage('Git Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/Avinash9810/Jenkins_manvev11.git'
-            }
-        }
-
         stage('Compile') {
             steps {
                 dir('Maven') {
