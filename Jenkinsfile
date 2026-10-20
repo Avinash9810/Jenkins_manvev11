@@ -8,28 +8,27 @@ pipeline {
     }
 
     stages {
-        stage('Git Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/Avinash9810/Jenkins_manvev11.git'
-            }
-        }
-
         stage('Compile') {
             steps {
-                sh 'mvn compile'
+                dir('apache-maven-3.10.0') {
+                    sh 'mvn compile'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                dir('apache-maven-3.10.0') {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn package'
+                dir('apache-maven-3.10.0') {
+                    sh 'mvn package'
+                }
             }
         }
     }
