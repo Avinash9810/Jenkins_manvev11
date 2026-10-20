@@ -77,8 +77,8 @@ def tests
 
 try {
 
-def osNode = jenkinsEnv.labelForOS(buildOs) 
-node(jenkinsEnv.nodeSelection(osNode)) {
+def osNode = env.labelForOS(buildOs) 
+node(env.nodeSelection(osNode)) {
     dir('build') {
         stage('Checkout') {
             checkout scm
@@ -94,8 +94,8 @@ node(jenkinsEnv.nodeSelection(osNode)) {
         }
 
         stage('Build / Unit Test') {
-            String jdkName = jenkinsEnv.jdkFromVersion(buildOs, buildJdk)
-            String mvnName = jenkinsEnv.mvnFromVersion(buildOs, buildMvn)
+            String jdkName = env.jdkFromVersion(buildOs, buildJdk)
+            String mvnName = env.mvnFromVersion(buildOs, buildMvn)
             try {
                 withEnv(["JAVA_HOME=${ tool "$jdkName" }",
                          "PATH+MAVEN=${ tool "$jdkName" }/bin:${tool "$mvnName"}/bin",
@@ -115,15 +115,15 @@ node(jenkinsEnv.nodeSelection(osNode)) {
 Map runITsTasks = [:]
 for (String os in runITsOses) {
     for (def jdk in runITsJdks) {
-        String osLabel = jenkinsEnv.labelForOS(os);
-        String jdkName = jenkinsEnv.jdkFromVersion(os, "${jdk}")
-        String mvnName = jenkinsEnv.mvnFromVersion(os, "${runITsMvn}")
+        String osLabel = env.labelForOS(os);
+        String jdkName = env.jdkFromVersion(os, "${jdk}")
+        String mvnName = env.mvnFromVersion(os, "${runITsMvn}")
         echo "OS: ${os} JDK: ${jdk} => Label: ${osLabel} JDK: ${jdkName}"
 
         String stageId = "${os}-jdk${jdk}"
         String stageLabel = "Run ITs ${os.capitalize()} Java ${jdk}"
         runITsTasks[stageId] = {
-            node(jenkinsEnv.nodeSelection(osLabel)) {
+            node(env.nodeSelection(osLabel)) {
                 stage("${stageLabel}") {
                     echo "NODE_NAME = ${env.NODE_NAME}"
                     // on Windows, need a short path or we hit 256 character limit for paths
