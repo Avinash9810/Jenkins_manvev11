@@ -213,11 +213,8 @@ parallel(runITsTasks)
     echo "[FAILURE-001] ${e}"
     currentBuild.result = "FAILURE"
     throw e
-} finally {
-    // notify completion
-    stage("Notifications") {
-        jenkinsNotify()      
-    }    
+}finally {
+    echo "Pipeline execution completed."
 }
 
 def archiveDirs(stageId, archives) {
